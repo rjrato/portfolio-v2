@@ -1,0 +1,26 @@
+export const contact = {
+  title: "Contacto",
+  heading: "Vamos conversar!",
+  subtitle: "Necessita de aumentar a sua presença online, desenvolver uma app móvel para o seu negócio ou mesmo apenas um café? Adoraria ouví-lo!",
+  form: {
+    name: "Nome",
+    namePlaceholder: "O seu nome",
+    email: "Email",
+    emailPlaceholder: "O seu email",
+    service: "Serviço de interesse",
+    servicePlaceholder: "Selecione um serviço",
+    services: {
+      landingWebsites: "Landing Pages & Websites",
+      webAppsMvps: "Web Apps & MVPs",
+      mobileApps: "Aplicações Móveis",
+      aiFeatures: "Funcionalidades de IA & Automação",
+      other: "Outro",
+    },
+    message: "Mensagem",
+    messagePlaceholder: "A sua mensagem...",
+    send: "Enviar Mensagem",
+    sending: "A enviar...",
+    success: "Mensagem enviada com sucesso!",
+    error: "Erro ao enviar mensagem. Tente novamente, ou envie diretamente para projects@ricardorato.dev",
+  },
+};
