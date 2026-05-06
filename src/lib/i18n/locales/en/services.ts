@@ -1,6 +1,10 @@
 export const services = {
   section: "services",
-  headline: "Clear services. Transparent pricing. Built for modern digital products.",
+  headline: [
+    "Clear services.",
+    "Transparent pricing.",
+    "Built for modern digital products.",
+  ],
   subheadline: "I help startups and businesses launch websites, web apps, mobile apps, and AI-powered features with a practical, product-focused approach. Every service is structured around outcomes, timelines, and realistic starting prices.",
   intro_note: "Prices below are starting points for typical projects. Final pricing depends on scope, integrations, timelines, and product complexity.",
   services: [
@@ -78,6 +82,7 @@ export const services = {
     }
   ],
   retainer: {
+    retainer: "// Retainer",
     title: "Ongoing Support & Product Growth",
     description: "For clients who need continuous improvements, support, maintenance, or product iteration after launch.",
     plans: [

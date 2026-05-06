@@ -1,6 +1,11 @@
 export const faq = {
+  section: "frequently asked questions",
   headline: "Frequently Asked Questions",
   subheadline: "Everything you need to know before reaching out.",
+  categories: {
+    services: "Services & Pricing",
+    maintenance: "Hosting & Maintenance",
+  },
   items: [
     // Serviços & Preços
     {

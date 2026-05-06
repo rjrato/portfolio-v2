@@ -4,6 +4,8 @@ import { HeroSection } from "@/components/sections/hero-section";
 import { AboutSection } from "@/components/sections/about-section";
 import { SkillsSection } from "@/components/sections/skills-section";
 import { ProjectsSection } from "@/components/sections/projects-section";
+import { ServicesSection } from "@/components/sections/services-section";
+import { FaqSection } from "@/components/sections/faq-section";
 import { ContactSection } from "@/components/sections/contact-section";
 import { Footer } from "@/components/layout/footer";
 import { FadeIn } from "@/components/ui/fade-in";
@@ -32,6 +34,12 @@ export default async function HomePage({
         </FadeIn>
         <FadeIn>
           <ProjectsSection dict={dict.projects} />
+        </FadeIn>
+        <FadeIn>
+          <ServicesSection dict={dict.services} />
+        </FadeIn>
+        <FadeIn>
+          <FaqSection dict={dict.faq} />
         </FadeIn>
         <FadeIn>
           <ContactSection dict={dict.contact} lang={lang as Locale} />

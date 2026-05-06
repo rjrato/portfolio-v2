@@ -15,7 +15,7 @@ interface HeaderProps {
   lang: Locale;
 }
 
-const navItems = ["about", "skills", "projects", "contact"] as const;
+const navItems = ["about", "skills", "projects", "services", "faq", "contact"] as const;
 
 export function Header({ dict, lang }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);

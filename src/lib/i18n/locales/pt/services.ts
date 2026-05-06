@@ -1,6 +1,10 @@
 export const services = {
-  section: "serviços",
-  headline: "Serviços claros. Preços transparentes. Criado para produtos digitais modernos.",
+  section: "// serviços",
+  headline: [
+    "Serviços claros.",
+    "Preços transparentes.",
+    "Criado para produtos digitais modernos.",
+  ],
   subheadline: "Ajudo startups e empresas a lançar websites, aplicações web, aplicações móveis e funcionalidades de IA com uma abordagem prática e focada no produto. Cada serviço é estruturado em torno de resultados, prazos e preços iniciais realistas.",
   intro_note: "Os preços abaixo são pontos de partida para projetos típicos. O valor final depende do âmbito, integrações, prazos e complexidade do produto.",
   services: [
@@ -31,7 +35,7 @@ export const services = {
         "MVPs de produto e ferramentas internas",
         "Dashboards, portais e painéis de administração",
         "Autenticação e funções de utilizador",
-        "Desenho de base de dados e integração com Supabase",
+        "Arquitetura de base de dados",
         "Integrações de API e serviços de terceiros",
         "Configuração de deployment e suporte ao lançamento"
       ],
@@ -44,7 +48,7 @@ export const services = {
       id: "mobile-apps",
       name: "Aplicações Móveis",
       tagline: "Aplicações móveis multiplataforma para iOS e Android com foco na velocidade, usabilidade e escalabilidade.",
-      description: "Ideal para empresas que precisam de um produto móvel sem a necessidade de criar equipas nativas separadas. Desenvolvo apps móveis principalmente com React Native, ajudando os clientes a lançar aplicações práticas mais rapidamente, mantendo a stack eficiente e fácil de manter.",
+      description: "Ideal para empresas que precisam de um produto móvel sem a necessidade de criar equipas nativas separadas. Desenvolvo apps móveis com recurso ás mais recentes tecnologias, ajudando os clientes a lançar aplicações práticas mais rapidamente.",
       includes: [
         "Desenvolvimento de apps em React Native",
         "Entrega para iOS e Android a partir de um único código-base",
@@ -78,12 +82,13 @@ export const services = {
     }
   ],
   retainer: {
+    retainer: "// Manutenção",
     title: "Suporte Contínuo e Crescimento do Produto",
     description: "Para clientes que necessitam de melhorias contínuas, suporte, manutenção ou iteração do produto após o lançamento.",
     plans: [
       {
-        name: "Plano Care",
-        price: "Desde 300 €/mês",
+        name: "Plano Básico",
+        price: "Desde 360€ /ano",
         includes: [
           "Correção de bugs e pequenas atualizações",
           "Suporte de manutenção básica",
@@ -91,12 +96,12 @@ export const services = {
         ]
       },
       {
-        name: "Retainer de Crescimento",
-        price: "Desde 800 €/mês",
+        name: "Apoio Recorrente",
+        price: "Desde 800 €/ ano",
         includes: [
           "Melhorias contínuas",
           "Desenvolvimento de pequenas funcionalidades",
-          "Suporte técnico e planeamento"
+          "Serviços com atualizações constantes"
         ]
       }
     ]

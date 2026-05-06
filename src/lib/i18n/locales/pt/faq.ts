@@ -1,6 +1,11 @@
 export const faq = {
+  section: "perguntas frequentes",
   headline: "Perguntas Frequentes",
   subheadline: "Tudo o que precisa de saber antes de entrar em contacto.",
+  categories: {
+    services: "Serviços e Preços",
+    maintenance: "Alojamento e Manutenção",
+  },
   items: [
     // Serviços & Preços
     {
