@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
+import { use } from "react";
 import { Inter, JetBrains_Mono, Geist } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
-import "./globals.css";
 import { cn } from "@/lib/utils";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
@@ -60,23 +60,6 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
-  icons: {
-    icon: [
-      {
-        url: "/icon-light-32x32.png",
-        media: "(prefers-color-scheme: light)",
-      },
-      {
-        url: "/icon-dark-32x32.png",
-        media: "(prefers-color-scheme: dark)",
-      },
-      {
-        url: "/icon.svg",
-        type: "image/svg+xml",
-      },
-    ],
-    apple: "/apple-icon.png",
-  },
 };
 
 export const viewport: Viewport = {
@@ -90,17 +73,24 @@ export const viewport: Viewport = {
   userScalable: true,
 };
 
-export default function RootLayout({
+export default function LangLayout({
   children,
-}: Readonly<{
+  params,
+}: {
   children: React.ReactNode;
-}>) {
+  params: Promise<{ lang: string }>;
+}) {
+  const { lang } = use(params);
+
   return (
     <html
-      lang="pt"
+      lang={lang}
       className={cn("bg-background", inter.variable, jetbrainsMono.variable, "font-sans", geist.variable)}
       suppressHydrationWarning
     >
+      <head>
+        <meta name="apple-mobile-web-app-title" content="dev" />
+      </head>
       <body className="font-sans antialiased">{children}</body>
       {process.env.NODE_ENV === "production" && <Analytics />}
     </html>
