@@ -2,6 +2,7 @@
 
 import { Heart, Coffee } from "lucide-react";
 import { SocialLinks } from "@/components/ui/social-links";
+import { WordmarkLogo } from "@/components/ui/wordmark-logo";
 import type { Translations } from "@/lib/i18n/dictionaries";
 
 interface FooterProps {
@@ -13,8 +14,11 @@ export function Footer({ dict }: FooterProps) {
 
   return (
     <footer className="py-12 border-t border-border bg-card/30">
-      <div className="container mx-auto px-4 md:px-6">
+      <div className="container px-6 md:px-12 xl:px-16">
         <div className="flex flex-col items-center gap-6">
+          {/* Wordmark */}
+          <WordmarkLogo className="h-24" />
+
           {/* Social Links */}
           <SocialLinks iconSize="sm" />
 

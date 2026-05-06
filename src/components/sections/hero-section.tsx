@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowDown, FileText } from "lucide-react";
+import { ArrowDown, FileText, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SocialLinks } from "../ui/social-links";
 import type { Translations } from "@/lib/i18n/dictionaries";
@@ -28,10 +28,22 @@ export function HeroSection({ dict }: HeroSectionProps) {
 
   return (
     <section className="min-h-screen flex flex-col justify-center relative overflow-hidden">
-      {/* Background gradient effect */}
-      <div className="absolute inset-0 bg-linear-to-br from-primary/5 via-transparent to-transparent pointer-events-none" />
+      {/* Backlight glow */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          width: 600,
+          height: 600,
+          borderRadius: "50%",
+          background: "oklch(0.65 0.18 250 / 0.12)",
+          filter: "blur(100px)",
+          top: "10%",
+          left: "50%",
+          transform: "translateX(-50%)",
+        }}
+      />
       
-      <div className="container mx-auto px-4 md:px-6 py-20 md:py-0">
+      <div className="container px-6 md:px-12 xl:px-16 py-20 md:py-0">
         <div className="max-w-4xl mx-auto text-center">
           {/* Greeting */}
           <p className="text-primary font-mono text-sm md:text-base mb-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -61,6 +73,7 @@ export function HeroSection({ dict }: HeroSectionProps) {
               size="lg"
               className="bg-primary text-primary-foreground hover:bg-primary/90"
             >
+              <Send className="mr-2 h-4 w-4" />
               {dict.cta}
             </Button>
             <Button

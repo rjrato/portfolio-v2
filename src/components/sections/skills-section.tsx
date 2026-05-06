@@ -1,7 +1,7 @@
 "use client";
 
 import { getSkillsByCategory, type Skill } from "@/lib/data/skills";
-import { SkillIcon } from "../../../components/ui/skill-icon";
+import { SkillIcon } from "@/components/ui/skill-icon";
 import type { Translations } from "@/lib/i18n/dictionaries";
 
 interface SkillsSectionProps {
@@ -51,19 +51,18 @@ function SkillCategory({ title, skills }: SkillCategoryProps) {
 export function SkillsSection({ dict }: SkillsSectionProps) {
   return (
     <section id="skills" className="py-20 md:py-32 bg-card/30">
-      <div className="container mx-auto px-4 md:px-6">
-        {/* Header */}
+      <div className="container px-6 md:px-12 xl:px-16">
         <div className="mb-16">
           <p className="text-primary font-mono text-sm mb-2">{dict.title}</p>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-2">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
             {dict.heading}
           </h2>
+          <div className="w-20 h-1 bg-primary rounded-full mb-4" />
           <p className="text-xl md:text-2xl text-muted-foreground">
             {dict.subheading}
           </p>
         </div>
 
-        {/* Skills Grid */}
         <div className="space-y-12">
           {categories.map((category) => (
             <SkillCategory

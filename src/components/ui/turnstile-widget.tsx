@@ -43,55 +43,59 @@ export function TurnstileWidget({
   const containerRef = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<string | null>(null);
 
+  // Keep latest callbacks in refs so the widget is never re-created just
+  // because the parent passed new inline function references.
+  const onVerifyRef = useRef(onVerify);
+  const onErrorRef = useRef(onError);
+  const onExpireRef = useRef(onExpire);
+  useEffect(() => {
+    onVerifyRef.current = onVerify;
+    onErrorRef.current = onError;
+    onExpireRef.current = onExpire;
+  });
+
   const renderWidget = useCallback(() => {
     if (!containerRef.current || !window.turnstile) return;
 
-    // Remove existing widget if any
     if (widgetIdRef.current) {
       try {
         window.turnstile.remove(widgetIdRef.current);
       } catch {
-        // Widget may have been removed already
+        // widget may already be gone
       }
+      widgetIdRef.current = null;
     }
 
     widgetIdRef.current = window.turnstile.render(containerRef.current, {
       sitekey: siteKey,
-      callback: onVerify,
-      "error-callback": onError,
-      "expired-callback": onExpire,
+      callback: (token) => onVerifyRef.current(token),
+      "error-callback": () => onErrorRef.current?.(),
+      "expired-callback": () => onExpireRef.current?.(),
       theme,
       size: "normal",
     });
-  }, [siteKey, onVerify, onError, onExpire, theme]);
+  }, [siteKey, theme]); // callbacks intentionally excluded — handled via refs above
 
   useEffect(() => {
-    // Load Turnstile script
-    const existingScript = document.querySelector(
-      'script[src*="turnstile"]'
-    );
+    const existingScript = document.querySelector('script[src*="turnstile"]');
 
     if (existingScript) {
-      // Script already loaded, render widget
-      if (window.turnstile) {
-        renderWidget();
-      }
+      if (window.turnstile) renderWidget();
       return;
     }
 
-    // Create and load script
     const script = document.createElement("script");
-    script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js";
+    // ?onload= tells Cloudflare to call window.onTurnstileLoad after the script loads.
+    // Without this parameter the callback is never invoked.
+    script.src =
+      "https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onTurnstileLoad&render=explicit";
     script.async = true;
     script.defer = true;
 
-    window.onTurnstileLoad = () => {
-      renderWidget();
-    };
+    window.onTurnstileLoad = renderWidget;
 
     document.head.appendChild(script);
 
-    // Performance Optimization
     const link = document.createElement("link");
     link.rel = "preconnect";
     link.href = "https://challenges.cloudflare.com";
@@ -102,7 +106,7 @@ export function TurnstileWidget({
         try {
           window.turnstile.remove(widgetIdRef.current);
         } catch {
-          // Widget may have been removed already
+          // widget may already be gone
         }
       }
     };

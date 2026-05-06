@@ -1,0 +1,31 @@
+Exatamente. A distinção é clara:
+
+**Landing page (scroll único) — sem rotas próprias:**
+- Hero, About, Skills, Projects, Contact → `src/components/sections/`
+- Compostas todas em `src/app/[lang]/page.tsx`
+- Navegação por scroll com `id=` nas secções
+
+**Páginas independentes — com rota própria:**
+- Privacy Policy → `src/app/[lang]/privacy-policy/page.tsx`
+- Cookie Policy → `src/app/[lang]/cookie-policy/page.tsx`
+- Detalhe de projeto → `src/app/[lang]/projects/[slug]/page.tsx` (se vier a existir)
+
+O Claude Code está correto — estava a corrigir exatamente isso. Deixa-o terminar a reorganização e depois confirma que a estrutura final ficou:
+
+```
+src/app/
+└── [lang]/
+    ├── page.tsx                     ← landing page completa
+    ├── privacy-policy/
+    │   └── page.tsx
+    └── cookie-policy/
+        └── page.tsx
+
+src/components/
+└── sections/
+    ├── hero-section.tsx
+    ├── about-section.tsx
+    ├── skills-section.tsx
+    ├── projects-section.tsx
+    └── contact-section.tsx
+```

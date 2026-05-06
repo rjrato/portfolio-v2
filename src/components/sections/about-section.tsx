@@ -11,7 +11,7 @@ interface AboutSectionProps {
 export function AboutSection({ dict }: AboutSectionProps) {
   return (
     <section id="about" className="py-20 md:py-32">
-      <div className="container mx-auto px-4 md:px-6">
+      <div className="container px-6 md:px-12 xl:px-16">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
           {/* Left column - Title */}
           <div className="lg:sticky lg:top-32">

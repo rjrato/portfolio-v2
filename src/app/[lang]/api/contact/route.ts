@@ -7,14 +7,9 @@ interface ContactRequest {
   turnstileToken: string;
 }
 
-interface TurnstileVerifyResponse {
-  success: boolean;
-  "error-codes"?: string[];
-}
+const TURNSTILE_SECRET_KEY = process.env.TURNSTILE_SECRET_KEY;
 
-const TURNSTILE_SECRET_KEY = process.env.TURNSTILE_SECRET_KEY || "1x0000000000000000000000000000000AA";
-
-async function verifyTurnstileToken(token: string): Promise<boolean> {
+async function verifyTurnstileToken(token: string) {
   try {
     const response = await fetch(
       "https://challenges.cloudflare.com/turnstile/v0/siteverify",
@@ -23,18 +18,18 @@ async function verifyTurnstileToken(token: string): Promise<boolean> {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
-        body: new URLSearchParams({
+        body: JSON.stringify({
           secret: TURNSTILE_SECRET_KEY,
           response: token,
         }),
       }
     );
 
-    const data: TurnstileVerifyResponse = await response.json();
-    return data.success;
+    const result = await response.json();
+    return result;
   } catch (error) {
     console.error("Turnstile verification error:", error);
-    return false;
+    return { success: false, "error-codes": ["internal-error"] };
   }
 }
 

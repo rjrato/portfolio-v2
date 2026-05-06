@@ -42,40 +42,40 @@ Personal portfolio website to showcase software engineering services and past wo
 
 ```
 portfolio/
-├── public/                         # Static assets (never inside src/)
-│   ├── images/
-│   ├── icons/
+├── public/                              # Static assets (never inside src/)
+│   ├── wordmark-ricardorato-white.svg   # Wordmark logo (white letters + primary brackets)
 │   └── favicon.ico
 ├── src/
 │   ├── app/
-│   │   |── globals.css             # Styles
-│   │   └── [lang]/                 # Dynamic locale segment (pt, en)
-│   │       ├── layout.tsx          # Root layout with font, theme, metadata
-│   │       ├── page.tsx            # Home (Hero + Services + Projects preview)
-│   │       ├── projects/
-│   │       │   └── page.tsx        # Full projects listing
-│   │       └── contact/
-│   │           └── page.tsx        # Contact page
+│   │   ├── globals.css                  # Design tokens, Tailwind config, container utility
+│   │   └── [lang]/                      # Dynamic locale segment (pt, en)
+│   │       ├── layout.tsx               # Root layout with font, theme, metadata
+│   │       ├── page.tsx                 # Landing page — composes all scroll sections
+│   │       ├── api/contact/route.ts     # (optional) contact API route
+│   │       ├── privacy-policy/          # (future) standalone page
+│   │       └── cookie-policy/           # (future) standalone page
 │   ├── components/
-│   │   ├── ui/                     # Primitives — stateless, reusable anywhere
+│   │   ├── ui/                          # Primitives — stateless, reusable anywhere
 │   │   │   ├── button.tsx
 │   │   │   ├── input.tsx
 │   │   │   ├── textarea.tsx
 │   │   │   ├── select.tsx
 │   │   │   ├── badge.tsx
 │   │   │   ├── card.tsx
-│   │   │   ├── social-links.tsx    # Social icon links (footer, hero, etc.)
-│   │   │   └── turnstile-widget.tsx # Cloudflare Turnstile wrapper
-│   │   ├── sections/               # Page sections — context-aware, not reusable across pages
+│   │   │   ├── social-links.tsx
+│   │   │   ├── skill-icon.tsx
+│   │   │   └── turnstile-widget.tsx
+│   │   ├── sections/                    # Scroll sections of the landing page
 │   │   │   ├── hero-section.tsx
-│   │   │   ├── services-section.tsx
-│   │   │   ├── projects-grid.tsx
+│   │   │   ├── about-section.tsx
+│   │   │   ├── skills-section.tsx
+│   │   │   ├── projects-section.tsx
+│   │   │   ├── project-card.tsx
 │   │   │   ├── contact-section.tsx
-│   │   │   └── contact-form.tsx    # Owns Zod schema + Server Action call
-│   │   └── layout/                 # Structural layout components
+│   │   │   └── contact-form.tsx         # Owns Zod schema + Server Action call
+│   │   └── layout/                      # Structural chrome
 │   │       ├── header.tsx
-│   │       ├── footer.tsx
-│   │       └── theme-toggle.tsx
+│   │       └── footer.tsx
 │   ├── lib/
 │   │   ├── i18n/
 │   │   │   ├── config.ts           # locales array, defaultLocale, Locale type

@@ -5,10 +5,8 @@ import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { DropdownMenu } from "@radix-ui/react-dropdown-menu";
-import { DropdownMenuContent } from "@radix-ui/react-dropdown-menu";
-import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 import { cn } from "@/lib/utils";
+import { WordmarkLogo } from "@/components/ui/wordmark-logo";
 import type { Translations } from "@/lib/i18n/dictionaries";
 import type { Locale } from "@/lib/i18n/config";
 
@@ -50,18 +48,19 @@ export function Header({ dict, lang }: HeaderProps) {
           : "bg-transparent"
       )}
     >
-      <nav className="container mx-auto px-4 md:px-6">
+      <nav className="container px-6 md:px-12 xl:px-16">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <a
             href="#"
-            className="text-lg font-bold tracking-tight text-foreground hover:text-primary transition-colors"
+            className="inline-flex items-center"
+            aria-label="ricardorato.dev"
             onClick={(e) => {
               e.preventDefault();
               window.scrollTo({ top: 0, behavior: "smooth" });
             }}
           >
-            RR<span className="text-primary">.</span>
+            <WordmarkLogo className="h-6" />
           </a>
 
           {/* Desktop Navigation */}
@@ -79,27 +78,31 @@ export function Header({ dict, lang }: HeaderProps) {
 
           {/* Language Switcher & Mobile Menu */}
           <div className="flex items-center gap-2">
-            <DropdownMenu>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem asChild>
-                  <Link
-                    href={pathname.replace(`/${lang}`, "/pt")}
-                    className={cn(lang === "pt" && "bg-secondary")}
-                  >
-                    {dict.language.pt}
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link
-                    href={pathname.replace(`/${lang}`, "/en")}
-                    className={cn(lang === "en" && "bg-secondary")}
-                  >
-                    {dict.language.en}
-                  </Link>
-                </DropdownMenuItem>
-              </DropdownMenuContent>              
-            </DropdownMenu>
-
+            <div className="flex items-center gap-1 border border-border rounded-md px-2 py-1.5 font-mono text-xs">
+              <Link
+                href={pathname.replace(`/${lang}`, "/pt")}
+                className={cn(
+                  "px-1 transition-colors",
+                  lang === "pt"
+                    ? "text-foreground font-bold"
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                PT
+              </Link>
+              <span className="text-muted-foreground">/</span>
+              <Link
+                href={pathname.replace(`/${lang}`, "/en")}
+                className={cn(
+                  "px-1 transition-colors",
+                  lang === "en"
+                    ? "text-foreground font-bold"
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                EN
+              </Link>
+            </div>
 
             {/* Mobile Menu Button */}
             <Button
