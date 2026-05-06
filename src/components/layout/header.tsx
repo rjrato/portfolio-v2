@@ -19,13 +19,24 @@ const navItems = ["about", "skills", "projects", "contact"] as const;
 
 export function Header({ dict, lang }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
+    let lastY = window.scrollY;
+
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      const currentY = window.scrollY;
+      setIsScrolled(currentY > 20);
+      if (currentY < 20) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(currentY < lastY);
+      }
+      lastY = currentY;
     };
-    window.addEventListener("scroll", handleScroll);
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -45,7 +56,8 @@ export function Header({ dict, lang }: HeaderProps) {
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         isScrolled
           ? "bg-background/80 backdrop-blur-md border-b border-border"
-          : "bg-transparent"
+          : "bg-transparent",
+        isVisible ? "translate-y-0" : "-translate-y-full"
       )}
     >
       <nav className="container px-6 md:px-12 xl:px-16">
@@ -60,7 +72,7 @@ export function Header({ dict, lang }: HeaderProps) {
               window.scrollTo({ top: 0, behavior: "smooth" });
             }}
           >
-            <WordmarkLogo className="h-6" />
+            <WordmarkLogo className="h-8" />
           </a>
 
           {/* Desktop Navigation */}

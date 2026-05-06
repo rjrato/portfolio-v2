@@ -23,6 +23,8 @@ export interface Project {
   githubUrl?: string;
   /** URL do projeto em produção (opcional) */
   liveUrl?: string;
+  /** Caminho para imagem/animação do projeto em /public (opcional) */
+  image?: string;
 }
 
 export const projects: Project[] = [
@@ -32,6 +34,7 @@ export const projects: Project[] = [
     description: "Enabling broader access to compute power, making AI development more accessible from experimentation to production.",
     stack: ["React", "TypeScript", "Next.js", "Supabase", "Vercel"],
     liveUrl: "https://greenlink.pt",
+    image: "/greenlink.webp"
   },
   {
     id: "aventuras-no-limits",
@@ -40,6 +43,7 @@ export const projects: Project[] = [
     stack: ["HTML", "CSS", "JavaScript", "Bootstrap"],
     githubUrl: "https://github.com/rjrato/aventuranolimits",
     liveUrl: "https://www.aventurasnolimits.com/",
+    image: "/aventuras-no-limits.webp"
   },
   {
     id: "simon-game",
@@ -48,6 +52,7 @@ export const projects: Project[] = [
     stack: ["JavaScript", "HTML", "CSS", "Game Dev"],
     githubUrl: "https://github.com/rjrato/Simon-Game",
     liveUrl: "https://main.d30vxygnwrd7hy.amplifyapp.com/",
+    image: "/simon-game.mp4"
   },
   {
     id: "pong-game",
@@ -55,6 +60,7 @@ export const projects: Project[] = [
     description: "Experience the nostalgia of the classic Pong Game. Built with Python's Tkinter Library.",
     stack: ["Python", "Tkinter", "Game Dev"],
     githubUrl: "https://github.com/rjrato/Python-Projects/tree/main/Pong%20Game",
+    image: "/pong-game.mp4"
   },
   {
     id: "snake-game",
@@ -62,13 +68,15 @@ export const projects: Project[] = [
     description: "Remember the good old snake game? Who doesn't?! Crafted with Python's Tkinter library.",
     stack: ["Python", "Tkinter", "Game Dev"],
     githubUrl: "https://github.com/rjrato/Python-Projects/tree/main/Snake%20Game",
+    image: "/snake-game.mp4"
   },
   {
-    id: "turtle-crossing",
+    id: "turtle-crossing-game",
     title: "Turtle Crossing",
     description: "Let's cross the road! Could you guide the little turtle without being hit?!",
     stack: ["Python", "Tkinter", "Game Dev"],
     githubUrl: "https://github.com/rjrato/Python-Projects/tree/main/Turtle%20Crossing%20Game",
+    image: "/turtle-crossing-game.mp4"
   },
   {
     id: "shieldpass-vault",
@@ -76,6 +84,7 @@ export const projects: Project[] = [
     description: "Never save another password on browser! Keep it safe with this simple and effective password manager.",
     stack: ["Python", "Security", "Encryption"],
     githubUrl: "https://github.com/rjrato/Python-Projects/tree/main/ShieldPass%20Vault",
+    image: "/shieldpass-vault.webp"
   },
 ];
 

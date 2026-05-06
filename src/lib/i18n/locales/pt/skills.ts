@@ -1,5 +1,5 @@
 export const skills = {
-    title: "Competências",
+    title: "// Competências",
     heading: "Ferramentas que tenho usado",
     subheading: "e o que tenho aprendido!",
     categories: {

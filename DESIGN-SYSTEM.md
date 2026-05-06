@@ -169,19 +169,19 @@ O header usa o SVG `public/wordmark-ricardorato-white.svg`:
 </div>
 ```
 
-### Hero Glow
+### SectionGlow
+
+Círculo de luz difusa (600×600px, blur 100px, primary com 12% opacidade) centrado no elemento pai. Presente em **todas as secções** — Hero, About, Skills, Projects, Contact — posicionado antes do título da secção. O pai precisa de `relative` para o `absolute` funcionar.
 
 ```tsx
-<div
-  style={{
-    width: 600, height: 600,
-    borderRadius: "50%",
-    background: "oklch(0.65 0.18 250 / 0.12)",
-    filter: "blur(100px)",
-    top: "10%", left: "50%",
-    transform: "translateX(-50%)",
-  }}
-/>
+import { SectionGlow } from "@/components/ui/section-glow"
+
+<div className="relative">
+  <SectionGlow />
+  <p className="text-primary font-mono text-sm mb-2">{dict.title}</p>
+  <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">{dict.heading}</h2>
+  <div className="w-20 h-1 bg-primary rounded-full" />
+</div>
 ```
 
 ### Blockquote (About)
@@ -214,6 +214,28 @@ Usadas via `tw-animate-css` (importado em `globals.css`):
 | `animate-bounce` | Scroll indicator (Hero) |
 | `transition-all duration-300` | Hover states de cards |
 | `transition-colors` | Hover states de links e botões |
+
+### FadeIn (scroll-triggered)
+
+Wrapper Client Component que usa `IntersectionObserver` para fazer fade-in/fade-out das secções conforme o utilizador faz scroll. Cada secção em `[lang]/page.tsx` está envolvida num `<FadeIn>`.
+
+```tsx
+import { FadeIn } from "@/components/ui/fade-in"
+
+// Em page.tsx — envolve cada secção
+<FadeIn>
+  <AboutSection dict={dict.about} lang={lang} />
+</FadeIn>
+```
+
+**Props:**
+| Prop | Tipo | Default | Descrição |
+|---|---|---|---|
+| `children` | `ReactNode` | — | Conteúdo a animar |
+| `className` | `string` | `""` | Classes extra no div wrapper |
+| `delay` | `number` | `0` | Delay em ms (para stagger manual) |
+
+**Comportamento:** `opacity` + `translateY(2rem)` → `translateY(0)` em 0.6s ease. Threshold: 10% de visibilidade no viewport. Faz fade-out quando a secção sai do viewport (ideal para scroll up/down).
 
 ---
 

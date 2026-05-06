@@ -1,6 +1,7 @@
 "use client";
 
 import { ContactForm } from "@/components/sections/contact-form";
+import { SectionGlow } from "@/components/ui/section-glow";
 import type { Translations } from "@/lib/i18n/dictionaries";
 import type { Locale } from "@/lib/i18n/config";
 
@@ -14,7 +15,8 @@ export function ContactSection({ dict }: ContactSectionProps) {
     <section id="contact" className="py-20 md:py-32 bg-card/30">
       <div className="container px-6 md:px-12 xl:px-16">
         <div className="max-w-[720px] mx-auto">
-          <div className="text-center mb-12">
+          <div className="text-center mb-12 relative">
+            <SectionGlow />
             <p className="text-primary font-mono text-sm mb-2">
               {dict.title}
             </p>

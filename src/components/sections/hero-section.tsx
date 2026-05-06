@@ -3,6 +3,7 @@
 import { ArrowDown, FileText, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SocialLinks } from "../ui/social-links";
+import { SectionGlow } from "@/components/ui/section-glow";
 import type { Translations } from "@/lib/i18n/dictionaries";
 import type { Locale } from "@/lib/i18n/config";
 
@@ -28,20 +29,7 @@ export function HeroSection({ dict }: HeroSectionProps) {
 
   return (
     <section className="min-h-screen flex flex-col justify-center relative overflow-hidden">
-      {/* Backlight glow */}
-      <div
-        className="absolute pointer-events-none"
-        style={{
-          width: 600,
-          height: 600,
-          borderRadius: "50%",
-          background: "oklch(0.65 0.18 250 / 0.12)",
-          filter: "blur(100px)",
-          top: "10%",
-          left: "50%",
-          transform: "translateX(-50%)",
-        }}
-      />
+      <SectionGlow />
       
       <div className="container px-6 md:px-12 xl:px-16 py-20 md:py-0">
         <div className="max-w-4xl mx-auto text-center">

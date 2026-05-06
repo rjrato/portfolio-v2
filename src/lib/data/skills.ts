@@ -9,7 +9,7 @@ export const skills: Skill[] = [
   { name: "JavaScript", icon: "javascript", category: "languages" },
   { name: "TypeScript", icon: "typescript", category: "languages" },
   { name: "Python", icon: "python", category: "languages" },
-  { name: "C", icon: "c", category: "languages" },
+  { name: "C++", icon: "c", category: "languages" },
 
   // Frontend
   { name: "React", icon: "react", category: "frontend" },

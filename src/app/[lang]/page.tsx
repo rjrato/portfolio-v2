@@ -6,6 +6,7 @@ import { SkillsSection } from "@/components/sections/skills-section";
 import { ProjectsSection } from "@/components/sections/projects-section";
 import { ContactSection } from "@/components/sections/contact-section";
 import { Footer } from "@/components/layout/footer";
+import { FadeIn } from "@/components/ui/fade-in";
 import type { Locale } from "@/lib/i18n/config";
 
 export default async function HomePage({
@@ -20,11 +21,21 @@ export default async function HomePage({
     <div className="min-h-screen bg-background">
       <Header dict={dict} lang={lang as Locale} />
       <main>
-        <HeroSection dict={dict.hero} lang={lang as Locale} />
-        <AboutSection dict={dict.about} lang={lang as Locale} />
-        <SkillsSection dict={dict.skills} />
-        <ProjectsSection dict={dict.projects} />
-        <ContactSection dict={dict.contact} lang={lang as Locale} />
+        <FadeIn>
+          <HeroSection dict={dict.hero} lang={lang as Locale} />
+        </FadeIn>
+        <FadeIn>
+          <AboutSection dict={dict.about} lang={lang as Locale} />
+        </FadeIn>
+        <FadeIn>
+          <SkillsSection dict={dict.skills} />
+        </FadeIn>
+        <FadeIn>
+          <ProjectsSection dict={dict.projects} />
+        </FadeIn>
+        <FadeIn>
+          <ContactSection dict={dict.contact} lang={lang as Locale} />
+        </FadeIn>
       </main>
       <Footer dict={dict.footer} />
     </div>
