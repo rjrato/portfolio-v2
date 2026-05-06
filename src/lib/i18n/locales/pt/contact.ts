@@ -23,4 +23,13 @@ export const contact = {
     success: "Mensagem enviada com sucesso!",
     error: "Erro ao enviar mensagem. Tente novamente, ou envie diretamente para projects@ricardorato.dev",
   },
+  confirmationEmail: {
+    subject: "Recebemos o seu contacto",
+    salutation: "Olá",
+    intro: "Obrigado pelo seu contacto!",
+    message: "Entraremos em contacto brevemente.",
+    signOff: "Com os melhores cumprimentos,",
+    teamName: "Ricardo Rato",
+    privacyLabel: "Política de Privacidade",
+  }
 };

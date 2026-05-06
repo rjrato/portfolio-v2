@@ -1,35 +1,61 @@
 import { NextRequest, NextResponse } from "next/server";
+import { Resend } from 'resend';
+import { z } from 'zod';
+import { db } from '@/db';
+import { contacts } from '@/db/schema';
+import { getDictionary } from "@/lib/i18n/dictionaries";
 
 interface ContactRequest {
   name: string;
   email: string;
+  service: string;
   message: string;
   turnstileToken: string;
 }
 
+type TurnstileVerifyResult = {
+  success: boolean
+  'error-codes'?: string[]
+  hostname?: string
+  action?: string
+  challenge_ts?: string
+}
+
+const resend = new Resend(process.env.RESEND_API_KEY!)
 const TURNSTILE_SECRET_KEY = process.env.TURNSTILE_SECRET_KEY;
+const TURNSTILE_VERIFY_URL = "https://challenges.cloudflare.com/turnstile/v0/siteverify"
 
-async function verifyTurnstileToken(token: string) {
+const contactSchema = z.object({
+  name: z.string().min(2).max(50),
+  email: z.string().email().max(50),
+  service: z.array(z.string()).min(1),
+  message: z.string().min(1).max(5000),
+  locale: z.enum(["pt", "en"]).default("en"),
+  turnstileToken: z.string().min(1),
+})
+
+async function verifyTurnstile(token: string): Promise<TurnstileVerifyResult> {
   try {
-    const response = await fetch(
-      "https://challenges.cloudflare.com/turnstile/v0/siteverify",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: JSON.stringify({
-          secret: TURNSTILE_SECRET_KEY,
-          response: token,
-        }),
-      }
-    );
+    const body = new URLSearchParams({
+      secret: TURNSTILE_SECRET_KEY!,
+      response: token,
+    })
 
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    console.error("Turnstile verification error:", error);
-    return { success: false, "error-codes": ["internal-error"] };
+    const res = await fetch(TURNSTILE_VERIFY_URL, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/x-www-form-urlencoded',
+      },
+      body: body.toString(),
+    })
+
+    if (!res.ok) {
+      return { success: false, 'error-codes': ['http-error'] }
+    }
+
+    return (await res.json()) as TurnstileVerifyResult
+  } catch {
+    return { success: false, 'error-codes': ['internal-error'] }
   }
 }
 
@@ -52,6 +78,7 @@ function validateContactRequest(body: unknown): body is ContactRequest {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
+    const data = contactSchema.parse(body)
 
     // Validate request
     if (!validateContactRequest(body)) {
@@ -62,20 +89,63 @@ export async function POST(request: NextRequest) {
     }
 
     // Verify Turnstile token
-    const isValidToken = await verifyTurnstileToken(body.turnstileToken);
-    if (!isValidToken) {
+    const isValidToken = await verifyTurnstile(body.turnstileToken);
+    if (!isValidToken.success) {
       return NextResponse.json(
-        { error: "Invalid security token" },
+        { error: "Turnstile verification failed" },
         { status: 403 }
       );
     }
 
-    // Here you would typically:
-    // 1. Send an email notification
-    // 2. Store the message in a database
-    // 3. Integrate with a CRM or notification service
-    
-    // For now, we'll just log the contact
+    await db.insert(contacts).values({
+      name: data.name,
+      email: data.email,
+      message: data.message,
+      service: data.service.join(', '),
+      locale: data.locale
+    })
+
+    const dict = await getDictionary(data.locale)
+    const confirmationEmail = dict.contact.confirmationEmail
+
+    await Promise.all([
+      // Notification to us
+      resend.emails.send({
+        from: 'ricardorato.dev <noreply@ricardorato.dev>',
+        to: ['projects@ricardorato.dev'],
+        subject: `Novo Contacto: ${data.name}`,
+        template: {
+          id: 'ricardorato-income-message',
+          variables: {
+            name: data.name,
+            email: data.email,
+            service: data.service.join(', '),
+            message: data.message,
+          },
+        },
+      }),
+      // Confirmation to the sender
+      resend.emails.send({
+        from: 'ricardorato.dev <noreply@ricardorato.dev>',
+        to: [data.email],
+        subject: confirmationEmail.subject,
+        template: {
+          id: 'ricardorato-form-auto-response',
+          variables: {
+            salutation: confirmationEmail.salutation,
+            name: data.name,
+            intro: confirmationEmail.intro,
+            message: confirmationEmail.message,
+            sign_off: confirmationEmail.signOff,
+            team_name: confirmationEmail.teamName,
+            website_url: 'https://ricardorato.dev',
+            privacy_url: `https://ricardorato.dev/${data.locale}/privacy`,
+            privacy_label: confirmationEmail.privacyLabel,
+          },
+        },
+      }),
+    ])
+
     console.log("Contact form submission:", {
       name: body.name,
       email: body.email,
@@ -88,6 +158,12 @@ export async function POST(request: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
+    if (error instanceof z.ZodError) {
+      return NextResponse.json(
+        { success: false, errors: z.treeifyError(error) },
+        { status: 400 }
+      )
+    }
     console.error("Contact form error:", error);
     return NextResponse.json(
       { error: "Internal server error" },

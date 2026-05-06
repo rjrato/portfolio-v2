@@ -75,9 +75,9 @@ export const services = {
         "Automação para suporte e operações internas",
         "Orientação sobre escolha de modelos, trade-offs e implementação"
       ],
-      starting_price: "Discovery desde 750 €",
-      typical_range: "750 € – 6.000 €+",
-      typical_timeline: "1–6 semanas",
+      starting_price: "Desde 750€",
+      typical_range: "750 € – 20.000 €+",
+      typical_timeline: "1–8 semanas",
       pricing_note: "Melhor entregue por fases: primeiro discovery, depois implementação e otimização após o lançamento."
     }
   ],
@@ -88,7 +88,7 @@ export const services = {
     plans: [
       {
         name: "Plano Básico",
-        price: "Desde 360€ /ano",
+        price: "Desde 360€/ano",
         includes: [
           "Correção de bugs e pequenas atualizações",
           "Suporte de manutenção básica",
@@ -97,7 +97,7 @@ export const services = {
       },
       {
         name: "Apoio Recorrente",
-        price: "Desde 800 €/ ano",
+        price: "Desde 800€/ano",
         includes: [
           "Melhorias contínuas",
           "Desenvolvimento de pequenas funcionalidades",
